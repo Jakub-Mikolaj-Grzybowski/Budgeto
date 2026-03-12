@@ -29,12 +29,13 @@ internal class UpdateTransactionCommandHandler : IRequestHandler<UpdateTransacti
 
         Guard.Against.NotFound(request.Id, entity);
 
-        entity.Name = request.Name;
-        entity.Amount = request.Amount;
-        entity.Date = DateOnly.FromDateTime(request.Date);
-        entity.Type = request.Type;
-        entity.CategoryId = request.CategoryId;
-        entity.Notes = request.Notes;
+        entity.Update(
+            request.Name,
+            request.Amount,
+            DateOnly.FromDateTime(request.Date),
+            request.Type,
+            request.CategoryId,
+            request.Notes);
 
         await _context.SaveChangesAsync(cancellationToken);
     }

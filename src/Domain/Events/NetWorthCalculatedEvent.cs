@@ -1,10 +1,17 @@
-namespace Domain.Events
+namespace Budgeto.Domain.Events;
+
+public class NetWorthCalculatedEvent : BaseEvent
 {
-    public class NetWorthCalculatedEvent
+    public int NetWorthSnapshotId { get; }
+    public decimal TotalAssets { get; }
+    public decimal TotalLiabilities { get; }
+    public decimal NetWorth { get; }
+
+    public NetWorthCalculatedEvent(int snapshotId, decimal totalAssets, decimal totalLiabilities, decimal netWorth)
     {
-        public Guid NetWorthId { get; set; }
-        public Guid UserId { get; set; }
-        public DateTime Date { get; set; }
-        public decimal Value { get; set; }
+        NetWorthSnapshotId = snapshotId;
+        TotalAssets = totalAssets;
+        TotalLiabilities = totalLiabilities;
+        NetWorth = netWorth;
     }
 }

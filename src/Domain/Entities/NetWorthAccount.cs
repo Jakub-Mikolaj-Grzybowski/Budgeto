@@ -1,6 +1,6 @@
 namespace Budgeto.Domain.Entities;
 
-public class NetWorthAccount : BaseAuditableEntity
+public class NetWorthAccount : BaseAuditableEntity, IAggregateRoot
 {
     public string Name { get; set; } = null!;
     public int CategoryId { get; set; }

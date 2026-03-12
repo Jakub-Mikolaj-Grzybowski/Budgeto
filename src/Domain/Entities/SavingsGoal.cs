@@ -1,6 +1,6 @@
 namespace Budgeto.Domain.Entities;
 
-public class SavingsGoal : BaseAuditableEntity
+public class SavingsGoal : BaseAuditableEntity, IAggregateRoot
 {
     public string Name { get; set; } = null!;
     public decimal TargetAmount { get; set; }

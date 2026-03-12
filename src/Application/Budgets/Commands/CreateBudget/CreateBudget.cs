@@ -1,5 +1,6 @@
 using Budgeto.Application.Common.Interfaces;
 using Budgeto.Domain.Entities;
+using Budgeto.Domain.ValueObjects;
 
 namespace Budgeto.Application.Budgets.Commands.CreateBudget;
 
@@ -24,15 +25,13 @@ internal class CreateBudgetCommandHandler : IRequestHandler<CreateBudgetCommand,
 
     public async Task<int> Handle(CreateBudgetCommand request, CancellationToken cancellationToken)
     {
-        var budget = new Budget
-        {
-            Name = request.Name,
-            Amount = request.Amount,
-            WeeklyLimit = request.WeeklyLimit,
-            CategoryId = request.CategoryId,
-            Month = request.Month,
-            Year = request.Year,
-        };
+        var budget = Budget.Create(
+            request.Name,
+            Money.Of(request.Amount),
+            request.CategoryId,
+            request.Month,
+            request.Year,
+            request.WeeklyLimit.HasValue ? Money.Of(request.WeeklyLimit.Value) : null);
 
         _context.Budgets.Add(budget);
         await _context.SaveChangesAsync(cancellationToken);

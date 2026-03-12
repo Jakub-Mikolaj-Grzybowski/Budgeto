@@ -25,15 +25,13 @@ internal class CreateTransactionCommandHandler : IRequestHandler<CreateTransacti
 
     public async Task<int> Handle(CreateTransactionCommand request, CancellationToken cancellationToken)
     {
-        var transaction = new Transaction
-        {
-            Name = request.Name,
-            Amount = request.Amount,
-            Date = DateOnly.FromDateTime(request.Date),
-            Type = request.Type,
-            CategoryId = request.CategoryId,
-            Notes = request.Notes,
-        };
+        var transaction = Transaction.Create(
+            request.Name,
+            request.Amount,
+            DateOnly.FromDateTime(request.Date),
+            request.Type,
+            request.CategoryId,
+            request.Notes);
 
         _context.Transactions.Add(transaction);
         await _context.SaveChangesAsync(cancellationToken);

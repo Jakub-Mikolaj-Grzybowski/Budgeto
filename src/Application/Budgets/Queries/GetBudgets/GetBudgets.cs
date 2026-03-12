@@ -1,5 +1,6 @@
 using Budgeto.Application.Common.Interfaces;
 using Budgeto.Domain.Enums;
+using Budgeto.Domain.Services;
 
 namespace Budgeto.Application.Budgets.Queries.GetBudgets;
 
@@ -33,9 +34,7 @@ internal class GetBudgetsQueryHandler : IRequestHandler<GetBudgetsQuery, List<Bu
 
         for (var i = 0; i < budgets.Count; i++)
         {
-            budgets[i].Spent = transactions
-                .Where(t => t.CategoryId == budgets[i].CategoryId)
-                .Sum(t => t.Amount);
+            budgets[i].Spent = FinancialCalculationService.CalculateSpentForCategory(transactions, budgets[i].CategoryId);
         }
 
         return budgets;

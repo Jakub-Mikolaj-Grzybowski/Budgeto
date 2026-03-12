@@ -1,9 +1,6 @@
-using System;
+namespace Budgeto.Domain.Exceptions;
 
-namespace Domain.Exceptions
+public class NetWorthCalculationException : Exception
 {
-    public class NetWorthCalculationException : Exception
-    {
-        public NetWorthCalculationException(string message) : base(message) { }
-    }
+    public NetWorthCalculationException(string message) : base(message) { }
 }
