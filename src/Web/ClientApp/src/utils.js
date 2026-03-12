@@ -1,3 +1,13 @@
+
+// Enum dla typów transakcji
+export const TransactionType = {
+  INCOME: 0,
+  EXPENSE: 1,
+};
+// Zamiast magicznych liczb używaj TransactionType:
+// tx.type === TransactionType.INCOME
+// tx.type === TransactionType.EXPENSE
+
 const MONTH_NAMES = [
   'Styczen', 'Luty', 'Marzec', 'Kwiecien', 'Maj', 'Czerwiec',
   'Lipiec', 'Sierpien', 'Wrzesien', 'Pazdziernik', 'Listopad', 'Grudzien'
@@ -63,6 +73,7 @@ export function groupByWeek(transactions) {
       };
     }
     groups[key].transactions.push(tx);
+
     if (tx.type === TransactionType.INCOME) groups[key].income += tx.amount;
     else groups[key].expense += tx.amount;
   });

@@ -1,15 +1,7 @@
 // src/Web/ClientApp/src/pages/DashboardPage.js
 
-// Enum dla typów transakcji
-export const TransactionType = {
-  INCOME: 0,
-  EXPENSE: 1,
-};
 // ...existing code...
-// Zamiast magicznych liczb używaj TransactionType:
-// tx.type === TransactionType.INCOME
-// tx.type === TransactionType.EXPENSE
-// ...existing code...
+import { TransactionType } from '../utils';
 // src/Web/ClientApp/src/pages/DashboardPage.js
 
 import React, { useState } from 'react';
