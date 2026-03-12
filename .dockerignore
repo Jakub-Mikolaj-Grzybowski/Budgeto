@@ -1,0 +1,43 @@
+# ============================================================
+# .dockerignore — pliki wykluczone z kontekstu budowania Docker
+# ============================================================
+
+# Git
+.git
+.gitignore
+
+# IDE / OS
+.vs
+.vscode
+*.user
+.DS_Store
+Thumbs.db
+
+# .NET build output
+**/bin/
+**/obj/
+**/artifacts/
+
+# Node modules (budowane wewnątrz Dockerfile)
+**/node_modules/
+**/ClientApp/build/
+
+# Testy
+tests/
+
+# Pliki z sekretami
+.env
+.secrets/
+*.pfx
+*.p12
+
+# Docker — nginx.conf potrzebny podczas budowania (COPY w Dockerfile.ui)
+docker/*.yml
+docker/Dockerfile*
+docker/.env*
+docker/*.md
+docker/*.sh
+
+# Dokumentacja
+README.md
+*.md

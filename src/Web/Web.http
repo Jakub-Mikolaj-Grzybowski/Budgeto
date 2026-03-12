@@ -1,0 +1,32 @@
+﻿# For more info on HTTP files go to https://aka.ms/vs/httpfile
+@Web_HostAddress = https://localhost:5001
+@AuthCookieName = .AspNetCore.Identity.Application
+@AuthCookieValue = <AuthCookieValue>
+
+# GET Identity Account Login
+# Get the @RequestVerificationToken necessary for logging in.
+GET {{Web_HostAddress}}/Identity/Account/Login
+
+###
+
+# POST Identity Account Login
+# Get the @AuthCookieValue necessary for authenticating requests.
+@Email=administrator@localhost
+@Password={{$processEnv SEED_ADMIN_PASSWORD}}
+@RequestVerificationToken=<RequestVerificationToken>
+POST {{Web_HostAddress}}/Identity/Account/Login
+Content-Type: application/x-www-form-urlencoded
+
+Input.Email={{Email}}&Input.Password={{Password}}&__RequestVerificationToken={{RequestVerificationToken}}
+
+# POST Transactions
+POST {{Web_HostAddress}}/api/Transactions
+Content-Type: application/json
+
+{
+  "name": "Wyplata",
+  "amount": 5000.00,
+  "date": "2026-02-01T00:00:00",
+  "type": 0,
+  "category": "Praca"
+}
