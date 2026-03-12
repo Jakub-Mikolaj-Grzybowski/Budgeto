@@ -1,6 +1,6 @@
 namespace Budgeto.Domain.Entities;
 
-public class RecurringTransaction : BaseAuditableEntity
+public class RecurringTransaction : BaseAuditableEntity, IAggregateRoot
 {
     public string Name { get; set; } = null!;
     public decimal Amount { get; set; }

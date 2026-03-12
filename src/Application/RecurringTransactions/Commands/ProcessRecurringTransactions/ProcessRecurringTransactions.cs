@@ -27,15 +27,13 @@ internal class ProcessRecurringTransactionsCommandHandler : IRequestHandler<Proc
             // Create transaction for each overdue occurrence, advancing date until it's in the future
             while (rec.NextDueDate <= today)
             {
-                _context.Transactions.Add(new Transaction
-                {
-                    Name = rec.Name,
-                    Amount = rec.Amount,
-                    Date = rec.NextDueDate,
-                    Type = TransactionType.Expense,
-                    CategoryId = rec.CategoryId,
-                    Notes = "Płatność cykliczna (auto)"
-                });
+                _context.Transactions.Add(Transaction.Create(
+                    rec.Name,
+                    rec.Amount,
+                    rec.NextDueDate,
+                    TransactionType.Expense,
+                    rec.CategoryId,
+                    "Płatność cykliczna (auto)"));
 
                 rec.NextDueDate = rec.Frequency == RecurrenceFrequency.Monthly
                     ? rec.NextDueDate.AddMonths(1)

@@ -1,10 +1,24 @@
-namespace Domain.ValueObjects
+namespace Budgeto.Domain.ValueObjects;
+
+public class NetWorthCalculationDetails : ValueObject
 {
-    public class NetWorthCalculationDetails
+    public decimal TotalAssets { get; private set; }
+    public decimal TotalLiabilities { get; private set; }
+    public string? Notes { get; private set; }
+
+    private NetWorthCalculationDetails() { }
+
+    public NetWorthCalculationDetails(decimal totalAssets, decimal totalLiabilities, string? notes = null)
     {
-        // Przykładowe pola
-        public decimal TotalAssets { get; set; }
-        public decimal TotalLiabilities { get; set; }
-        public string? Notes { get; set; }
+        TotalAssets = totalAssets;
+        TotalLiabilities = totalLiabilities;
+        Notes = notes;
+    }
+
+    protected override IEnumerable<object> GetEqualityComponents()
+    {
+        yield return TotalAssets;
+        yield return TotalLiabilities;
+        yield return Notes ?? string.Empty;
     }
 }

@@ -13,7 +13,7 @@ public class TransactionConfiguration : IEntityTypeConfiguration<Transaction>
         builder.Property(t => t.Amount).IsRequired().HasColumnType("decimal(18,2)");
         builder.HasIndex(t => t.Date);
         builder.HasIndex(t => t.Type);
-        builder.HasOne(t => t.Category).WithMany().HasForeignKey(t => t.CategoryId).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(t => t.Category).WithMany(c => c.Transactions).HasForeignKey(t => t.CategoryId).OnDelete(DeleteBehavior.Restrict);
         builder.Property(t => t.Notes).HasMaxLength(500);
     }
 }

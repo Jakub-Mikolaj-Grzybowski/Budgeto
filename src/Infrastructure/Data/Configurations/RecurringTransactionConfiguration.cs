@@ -11,6 +11,6 @@ public class RecurringTransactionConfiguration : IEntityTypeConfiguration<Recurr
         builder.HasKey(r => r.Id);
         builder.Property(r => r.Name).IsRequired().HasMaxLength(100);
         builder.Property(r => r.Amount).IsRequired().HasColumnType("decimal(18,2)");
-        builder.HasOne(r => r.Category).WithMany().HasForeignKey(r => r.CategoryId).OnDelete(DeleteBehavior.Restrict);
+        builder.HasOne(r => r.Category).WithMany(c => c.RecurringTransactions).HasForeignKey(r => r.CategoryId).OnDelete(DeleteBehavior.Restrict);
     }
 }

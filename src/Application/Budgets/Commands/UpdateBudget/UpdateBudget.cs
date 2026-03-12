@@ -1,4 +1,5 @@
 using Budgeto.Application.Common.Interfaces;
+using Budgeto.Domain.ValueObjects;
 
 namespace Budgeto.Application.Budgets.Commands.UpdateBudget;
 
@@ -28,12 +29,13 @@ internal class UpdateBudgetCommandHandler : IRequestHandler<UpdateBudgetCommand>
 
         Guard.Against.NotFound(request.Id, entity);
 
-        entity.Name = request.Name;
-        entity.Amount = request.Amount;
-        entity.WeeklyLimit = request.WeeklyLimit;
-        entity.CategoryId = request.CategoryId;
-        entity.Month = request.Month;
-        entity.Year = request.Year;
+        entity.Update(
+            request.Name,
+            Money.Of(request.Amount),
+            request.CategoryId,
+            request.Month,
+            request.Year,
+            request.WeeklyLimit.HasValue ? Money.Of(request.WeeklyLimit.Value) : null);
 
         await _context.SaveChangesAsync(cancellationToken);
     }

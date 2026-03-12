@@ -17,6 +17,8 @@ public class BudgetDto
         public Mapping()
         {
             CreateMap<Domain.Entities.Budget, BudgetDto>()
+                .ForMember(d => d.Amount, opt => opt.MapFrom(s => s.Amount.Amount))
+                .ForMember(d => d.WeeklyLimit, opt => opt.MapFrom(s => s.WeeklyLimit != null ? s.WeeklyLimit.Amount : (decimal?)null))
                 .ForMember(d => d.CategoryName, opt => opt.MapFrom(s => s.Category.Name))
                 .ForMember(d => d.Spent, opt => opt.Ignore());
         }

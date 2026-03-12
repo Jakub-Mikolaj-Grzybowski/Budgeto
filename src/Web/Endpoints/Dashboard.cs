@@ -1,4 +1,4 @@
-using Budgeto.Application.Dashboard.Queries;
+using Budgeto.Application.Dashboard.Queries.GetDashboardSummary;
 using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace Budgeto.Web.Endpoints;
