@@ -324,7 +324,7 @@ a:hover { color: var(--accent-blue); opacity: 0.85; }
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1400px) {
   .sidebar { transform: translateX(-100%); }
   .sidebar.open { transform: translateX(0); }
   .main-content { margin-left: 0; padding: 16px; padding-top: 56px; }
@@ -338,6 +338,44 @@ a:hover { color: var(--accent-blue); opacity: 0.85; }
   .budget-row-progress { width: 100%; }
   .dashboard-grid { grid-template-columns: 1fr !important; }
   .dashboard-summary-pair { grid-template-columns: 1fr !important; }
+  .chip-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); }
+  .budget-summary-grid { grid-template-columns: 1fr; }
+  .quick-add-panel { padding: 20px 16px 24px; }
+  .fab-button { bottom: 20px; right: 20px; }
+  .recurring-row { flex-wrap: wrap; }
+  .goals-grid { grid-template-columns: 1fr; }
+  .nw-summary-grid { grid-template-columns: 1fr 1fr; }
+  .dashboard-summary-value { font-size: 1.5rem; }
+
+  /* Pie chart: legend below chart */
+  .dashboard-pie-content { flex-direction: column; }
+  .dashboard-pie-chart-wrapper { flex: none; width: 100%; }
+  .dashboard-pie-legend {
+    flex-direction: row; flex-wrap: wrap; gap: 8px 16px;
+    padding-right: 0; justify-content: center; margin-top: 8px;
+  }
+  .dashboard-pie-legend-label { white-space: normal; }
+
+  /* NW history: stack */
+  .nw-history-grid { grid-template-columns: 1fr; gap: 12px; }
+  .nw-history-stats {
+    text-align: left; min-width: unset;
+    display: flex; gap: 16px; flex-wrap: wrap;
+  }
+
+  /* Transaction summary: allow wrap */
+  .tx-summary-row { flex-wrap: wrap; }
+
+  /* CRITICAL: make edit/delete always visible on touch */
+  .week-tx-actions { opacity: 1; }
+
+  /* Hide keyboard shortcuts on mobile */
+  .sidebar-shortcuts-btn { display: none; }
+  .kbd-help-overlay { display: none; }
+
+  /* ErrorBoundary: reduce padding */
+  .error-boundary { padding: 20px 16px; }
+  .error-boundary-icon { font-size: 2rem; }
 }
 
 .mobile-menu-btn {
@@ -540,51 +578,6 @@ a:hover { color: var(--accent-blue); opacity: 0.85; }
 
 .fab-button:hover {
   transform: scale(1.08); box-shadow: 0 6px 32px rgba(96, 165, 250, 0.4);
-}
-
-@media (max-width: 768px) {
-  .chip-grid { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); }
-  .budget-summary-grid { grid-template-columns: 1fr; }
-  .quick-add-panel { padding: 20px 16px 24px; }
-  .fab-button { bottom: 20px; right: 20px; }
-  .recurring-row { flex-wrap: wrap; }
-  .goals-grid { grid-template-columns: 1fr; }
-  .nw-summary-grid { grid-template-columns: 1fr 1fr; }
-
-  /* Dashboard: stack to single column */
-  .dashboard-grid { grid-template-columns: 1fr; }
-  .dashboard-summary-pair { grid-template-columns: 1fr; }
-  .dashboard-summary-value { font-size: 1.5rem; }
-
-  /* Pie chart: legend below chart */
-  .dashboard-pie-content { flex-direction: column; }
-  .dashboard-pie-chart-wrapper { flex: none; width: 100%; }
-  .dashboard-pie-legend {
-    flex-direction: row; flex-wrap: wrap; gap: 8px 16px;
-    padding-right: 0; justify-content: center; margin-top: 8px;
-  }
-  .dashboard-pie-legend-label { white-space: normal; }
-
-  /* NW history: stack */
-  .nw-history-grid { grid-template-columns: 1fr; gap: 12px; }
-  .nw-history-stats {
-    text-align: left; min-width: unset;
-    display: flex; gap: 16px; flex-wrap: wrap;
-  }
-
-  /* Transaction summary: allow wrap */
-  .tx-summary-row { flex-wrap: wrap; }
-
-  /* CRITICAL: make edit/delete always visible on touch */
-  .week-tx-actions { opacity: 1; }
-
-  /* Hide keyboard shortcuts on mobile */
-  .sidebar-shortcuts-btn { display: none; }
-  .kbd-help-overlay { display: none; }
-
-  /* ErrorBoundary: reduce padding */
-  .error-boundary { padding: 20px 16px; }
-  .error-boundary-icon { font-size: 2rem; }
 }
 
 @media (max-width: 480px) {
@@ -840,16 +833,6 @@ a:hover { color: var(--accent-blue); opacity: 0.85; }
 .quick-add-submit-btn:hover { opacity: 0.9; }
 .quick-add-submit-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
-.quick-add-success {
-  text-align: center; padding: 32px 20px;
-}
-.quick-add-success-icon {
-  font-size: 3rem; margin-bottom: 8px;
-}
-.quick-add-success-text {
-  font-size: 1rem; font-weight: 600; color: var(--accent-green);
-}
-
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: var(--bg-primary); }
 ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 3px; }
@@ -940,7 +923,6 @@ a:hover { color: var(--accent-blue); opacity: 0.85; }
 .recurring-actions { display: flex; gap: 6px; align-items: center; }
 
 /* Net Worth page */
-.nw-hero-label { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 8px; }
 .nw-summary-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 24px; }
 .nw-account-row {
   display: flex; align-items: center; gap: 12px;

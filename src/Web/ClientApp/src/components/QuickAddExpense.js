@@ -23,7 +23,6 @@ export function QuickAddExpense({ visible, onClose, onSubmit, categories }) {
   const [notes, setNotes] = useState('');
   const [type, setType] = useState(1);
   const [showAdvanced, setShowAdvanced] = useState(false);
-  const [success, setSuccess] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const amountRef = useRef(null);
 
@@ -36,7 +35,6 @@ export function QuickAddExpense({ visible, onClose, onSubmit, categories }) {
       setNotes('');
       setType(1);
       setShowAdvanced(false);
-      setSuccess(false);
       setSubmitting(false);
       setTimeout(() => amountRef.current?.focus(), 350);
     }
@@ -79,13 +77,6 @@ export function QuickAddExpense({ visible, onClose, onSubmit, categories }) {
       <div className={`quick-add-panel ${visible ? 'open' : ''}`}>
         <div className="quick-add-handle" />
 
-        {success ? (
-          <div className="quick-add-success">
-            <div className="quick-add-success-icon">&#10003;</div>
-            <div className="quick-add-success-text">Dodano!</div>
-          </div>
-        ) : (
-          <>
             <div className="quick-add-title">
               {type === 1 ? 'Nowy wydatek' : 'Nowy przychod'}
             </div>
@@ -180,8 +171,6 @@ export function QuickAddExpense({ visible, onClose, onSubmit, categories }) {
             >
               {submitting ? 'Zapisywanie...' : `Dodaj ${type === 1 ? 'wydatek' : 'przychod'}`}
             </button>
-          </>
-        )}
       </div>
     </>
   );

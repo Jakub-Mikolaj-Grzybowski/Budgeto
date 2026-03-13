@@ -9,8 +9,8 @@ import { NavLink } from 'react-router-dom';
 import { BarChart, Bar, XAxis, Tooltip, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell } from 'recharts';
 import { formatCurrency, getDayName, formatDateShort, getMonthName } from '../utils';
 import { SkeletonLoader } from '../components/SkeletonLoader';
-import { useDashboard } from '../components/useDashboard';
-import { useIsMobile } from '../components/useIsMobile';
+import { useDashboard } from '../hooks/useDashboard';
+import { useIsMobile } from '../hooks/useIsMobile';
 
 const CATEGORY_COLORS = [
   'var(--accent-red)', 'var(--accent-amber)', 'var(--accent-blue)',
