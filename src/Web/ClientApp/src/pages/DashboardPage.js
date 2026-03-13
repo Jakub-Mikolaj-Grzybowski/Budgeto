@@ -10,6 +10,7 @@ import { BarChart, Bar, XAxis, Tooltip, ResponsiveContainer, LineChart, Line, Pi
 import { formatCurrency, getDayName, formatDateShort, getMonthName } from '../utils';
 import { SkeletonLoader } from '../components/SkeletonLoader';
 import { useDashboard } from '../components/useDashboard';
+import { useIsMobile } from '../components/useIsMobile';
 
 const CATEGORY_COLORS = [
   'var(--accent-red)', 'var(--accent-amber)', 'var(--accent-blue)',
@@ -25,6 +26,7 @@ export function DashboardPage() {
   const now = new Date();
   const [month, setMonth] = useState(now.getMonth() + 1);
   const [year, setYear] = useState(now.getFullYear());
+  const isMobile = useIsMobile(768);
 
   const {
     loading, summary, chartData, recentTransactions,
@@ -71,7 +73,7 @@ export function DashboardPage() {
   return (
     <div>
       {/* Nagłówek */}
-      <div className="page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+      <div className="page-header page-header-flex">
         <div>
           <h1>Panel główny</h1>
           <p>Podsumowanie Twoich finansów</p>
@@ -84,20 +86,20 @@ export function DashboardPage() {
       </div>
 
       {/* ── Karty + Wykresy ── */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 16 }}>
+      <div className="dashboard-grid">
 
         {/* Lewa kolumna: kafelki + trend */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+          <div className="dashboard-summary-pair">
 
             {/* Bilans miesiąca */}
             <div className="summary-card" style={{ borderColor: balanceBorder, boxShadow: balanceShadow }}>
               <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 3, background: balanceColor, borderRadius: '12px 12px 0 0' }} />
               <div className="summary-label">Bilans miesiąca</div>
-              <div className="summary-value" style={{ color: balanceColor, fontSize: '2rem' }}>
+              <div className="summary-value dashboard-summary-value" style={{ color: balanceColor }}>
                 {formatCurrency(summary.balance)}
               </div>
-              <div style={{ display: 'flex', gap: 16, marginTop: 10, fontSize: '0.78rem' }}>
+              <div className="dashboard-detail-row">
                 <span style={{ color: 'var(--accent-green)' }}>↑ {formatCurrency(summary.totalIncome)}</span>
                 <span style={{ color: 'var(--accent-red)' }}>↓ {formatCurrency(summary.totalExpenses)}</span>
                 <span style={{ color: 'var(--text-muted)', marginLeft: 'auto' }}>{summary.transactionCount} transakcji</span>
@@ -105,17 +107,15 @@ export function DashboardPage() {
             </div>
 
             {/* Wartość netto */}
-            <NavLink to="/net-worth" style={{ textDecoration: 'none' }}>
-              <div className="summary-card" style={{ cursor: 'pointer', transition: 'border-color 0.15s, box-shadow 0.15s', borderColor: nwBorder, boxShadow: nwShadow }}
-                onMouseEnter={e => { e.currentTarget.style.borderColor = nwColor; e.currentTarget.style.boxShadow = isNwPositive ? '0 0 0 1px rgba(96,165,250,0.3) inset' : '0 0 0 1px rgba(248,113,113,0.3) inset'; }}
-                onMouseLeave={e => { e.currentTarget.style.borderColor = nwBorder; e.currentTarget.style.boxShadow = nwShadow; }}
+            <NavLink to="/net-worth" className="nw-card-link">
+              <div className="summary-card nw-card-hoverable" style={{ borderColor: nwBorder, boxShadow: nwShadow }}
               >
                 <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 3, background: nwColor, borderRadius: '12px 12px 0 0' }} />
                 <div className="summary-label">Wartość netto</div>
                 {netWorthValue !== null ? (
                   <>
-                    <div className="summary-value" style={{ color: nwColor, fontSize: '2rem' }}>{formatCurrency(netWorthValue)}</div>
-                    <div style={{ display: 'flex', gap: 12, marginTop: 10, fontSize: '0.78rem' }}>
+                    <div className="summary-value dashboard-summary-value" style={{ color: nwColor }}>{formatCurrency(netWorthValue)}</div>
+                    <div className="dashboard-nw-detail-row">
                       <span style={{ color: 'var(--accent-green)' }}>↑ {formatCurrency(netWorth.totalAssets)}</span>
                       <span style={{ color: 'var(--accent-red)' }}>↓ {formatCurrency(netWorth.totalLiabilities)}</span>
                     </div>
@@ -162,11 +162,11 @@ export function DashboardPage() {
             <h3 className="card-title">Top wydatki wg kategorii</h3>
           </div>
           {summary.topExpenseCategories && summary.topExpenseCategories.length > 0 ? (
-            <div style={{ display: 'flex', alignItems: 'center', flex: 1, gap: 0 }}>
-              <div style={{ flex: '1 1 60%' }}>
-                <ResponsiveContainer width="100%" height={350}>
+            <div className="dashboard-pie-content">
+              <div className="dashboard-pie-chart-wrapper">
+                <ResponsiveContainer width="100%" height={isMobile ? 250 : 350}>
                   <PieChart>
-                    <Pie data={summary.topExpenseCategories} dataKey="amount" nameKey="category" cx="50%" cy="50%" innerRadius={100} outerRadius={160} paddingAngle={2}>
+                    <Pie data={summary.topExpenseCategories} dataKey="amount" nameKey="category" cx="50%" cy="50%" innerRadius={isMobile ? 55 : 100} outerRadius={isMobile ? 90 : 160} paddingAngle={2}>
                       {summary.topExpenseCategories.map((_, i) => (
                         <Cell key={i} fill={CATEGORY_COLORS[i % CATEGORY_COLORS.length]} />
                       ))}
@@ -175,11 +175,11 @@ export function DashboardPage() {
                   </PieChart>
                 </ResponsiveContainer>
               </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 8, paddingRight: 16 }}>
+              <div className="dashboard-pie-legend">
                 {summary.topExpenseCategories.map((cat, i) => (
-                  <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <div key={i} className="dashboard-pie-legend-item">
                     <div style={{ width: 10, height: 10, borderRadius: '50%', flexShrink: 0, background: CATEGORY_COLORS[i % CATEGORY_COLORS.length] }} />
-                    <span style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', whiteSpace: 'nowrap' }}>{cat.category}</span>
+                    <span className="dashboard-pie-legend-label">{cat.category}</span>
                   </div>
                 ))}
               </div>
@@ -197,7 +197,7 @@ export function DashboardPage() {
             <h3 className="card-title">Historia wartości netto</h3>
             <NavLink to="/net-worth" style={{ fontSize: '0.8rem', fontWeight: 500 }}>Szczegóły →</NavLink>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr auto', gap: 24, alignItems: 'center' }}>
+          <div className="nw-history-grid">
             <ResponsiveContainer width="100%" height={90}>
               <LineChart data={nwChartData}>
                 <Line type="monotone" dataKey="Wartość netto" stroke={nwColor} strokeWidth={2} dot={false} />
@@ -205,7 +205,7 @@ export function DashboardPage() {
                 <XAxis dataKey="name" hide />
               </LineChart>
             </ResponsiveContainer>
-            <div style={{ textAlign: 'right', minWidth: 140 }}>
+            <div className="nw-history-stats">
               <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: 4 }}>Aktywa</div>
               <div style={{ fontSize: '0.95rem', fontWeight: 600, color: 'var(--accent-green)' }}>{formatCurrency(netWorth.totalAssets)}</div>
               <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: 8, marginBottom: 4 }}>Zobowiązania</div>

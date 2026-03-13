@@ -79,21 +79,10 @@ export function Layout({ children }) {
           </li>
         </ul>
         <button
+          className="sidebar-shortcuts-btn"
           onClick={() => setShowHelp(true)}
-          style={{
-            display: 'flex', alignItems: 'center', gap: 8, width: '100%',
-            background: 'none', border: 'none', cursor: 'pointer',
-            color: 'var(--text-muted)', fontSize: '0.78rem', padding: '8px 16px',
-            marginTop: 8, borderRadius: 8, transition: 'color 0.15s'
-          }}
-          onMouseEnter={e => e.currentTarget.style.color = 'var(--text-secondary)'}
-          onMouseLeave={e => e.currentTarget.style.color = 'var(--text-muted)'}
         >
-          <kbd style={{
-            display: 'inline-block', padding: '1px 6px', borderRadius: 4,
-            background: 'var(--bg-input)', border: '1px solid var(--border-color)',
-            fontSize: '0.72rem', fontFamily: 'monospace'
-          }}>Alt + /</kbd>
+          <kbd className="sidebar-shortcuts-kbd">Alt + /</kbd>
           Skróty klawiszowe
         </button>
       </nav>

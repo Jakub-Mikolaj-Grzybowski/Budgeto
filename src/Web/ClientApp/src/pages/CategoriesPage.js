@@ -63,7 +63,7 @@ export function CategoriesPage() {
 
   return (
     <div>
-      <div className="page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+      <div className="page-header page-header-flex">
         <div>
           <h1>Kategorie</h1>
           <p>Zarzadzaj kategoriami przychodow, wydatkow i wartosci netto</p>

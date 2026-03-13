@@ -17,13 +17,10 @@ export class ErrorBoundary extends Component {
   render() {
     if (this.state.hasError) {
       return (
-        <div style={{
-          display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-          minHeight: '60vh', gap: 16, textAlign: 'center', padding: 32
-        }}>
-          <div style={{ fontSize: '2.5rem' }}>⚠️</div>
-          <h2 style={{ color: 'var(--text-primary)', margin: 0 }}>Coś poszło nie tak</h2>
-          <p style={{ color: 'var(--text-muted)', margin: 0, maxWidth: 400 }}>
+        <div className="error-boundary">
+          <div className="error-boundary-icon">⚠️</div>
+          <h2>Coś poszło nie tak</h2>
+          <p>
             {this.state.error?.message || 'Wystąpił nieoczekiwany błąd.'}
           </p>
           <button

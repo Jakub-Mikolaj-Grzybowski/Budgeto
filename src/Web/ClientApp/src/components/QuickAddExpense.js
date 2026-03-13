@@ -60,10 +60,7 @@ export function QuickAddExpense({ visible, onClose, onSubmit, categories }) {
     };
     try {
       await onSubmit(data);
-      setSuccess(true);
-      setTimeout(() => {
-        onClose();
-      }, 800);
+      onClose();
     } catch (err) {
       toast.error(err?.message || 'Nie udało się dodać transakcji');
       setSubmitting(false);

@@ -354,7 +354,7 @@ export function BudgetsPage() {
 
   return (
     <div>
-      <div className="page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+      <div className="page-header page-header-flex">
         <div>
           <h1>Budzety</h1>
           <p>Planuj i kontroluj swoje wydatki</p>
