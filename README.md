@@ -1,157 +1,135 @@
-# 💰 Budgeto
+# Budgeto 💰
 
-A personal budgeting web application built with **ASP.NET Core** and **Clean Architecture**, designed to help users track and manage their finances.
+Osobisty menedżer budżetu domowego zbudowany na **ASP.NET Core** i **React**. Pozwala śledzić przychody i wydatki, planować budżety, kategoryzować transakcje oraz wyznaczać cele oszczędnościowe — wszystko w jednym miejscu.
+
+## Funkcje
+
+- **Transakcje** — rejestruj przychody i wydatki, filtruj i przeglądaj historię
+- **Budżety i kategorie** — twórz budżety dla wybranych kategorii i kontroluj limity wydatków
+- **Cele oszczędnościowe** — wyznaczaj cele i śledź postęp ich realizacji
+- **Dashboard** — przegląd finansów w jednym widoku
+
+## Stack technologiczny
+
+| Warstwa | Technologia |
+|---|---|
+| Backend | ASP.NET Core 9, Minimal API, MediatR, EF Core |
+| Frontend | React 18, JavaScript |
+| Baza danych | PostgreSQL |
+| Architektura | Clean Architecture |
+| Konteneryzacja | Docker, Docker Compose, Nginx |
 
 ---
 
-## 🏗️ Architecture
+## Uruchomienie lokalne
 
-The project follows the [Clean Architecture](https://github.com/jasontaylordev/CleanArchitecture) pattern and is organized into the following layers:
+### Wymagania
+
+- [.NET 9 SDK](https://dotnet.microsoft.com/download)
+- [Node.js 20+](https://nodejs.org/)
+- PostgreSQL
+
+### Kroki
+
+1. **Sklonuj repozytorium**
+
+   ```bash
+   git clone https://github.com/Jakub-Mikolaj-Grzybowski/Budgeto.git
+   cd Budgeto
+   ```
+
+2. **Skonfiguruj connection string** w `src/Web/appsettings.json`:
+
+   ```json
+   "ConnectionStrings": {
+     "BudgetoDb": "Host=localhost;Database=budgeto;Username=postgres;Password=twoje_haslo"
+   }
+   ```
+
+3. **Uruchom aplikację**
+
+   ```bash
+   cd src/Web
+   dotnet watch run
+   ```
+
+   Aplikacja dostępna pod adresem: **https://localhost:5001**
+
+---
+
+## Uruchomienie przez Docker
+
+Projekt zawiera gotową konfigurację Docker z dwoma kontenerami: `budgeto-backend` (API) i `budgeto-frontend` (React + Nginx). Kontenery komunikują się przez zewnętrzne sieci `db-network` i `proxy-network` — musisz je utworzyć przed uruchomieniem.
+
+### Wymagania
+
+- [Docker](https://www.docker.com/) z Docker Compose
+- PostgreSQL dostępny w sieci `db-network` (np. osobny kontener)
+
+### Kroki
+
+1. **Utwórz wymagane sieci Docker** (jeśli jeszcze nie istnieją)
+
+   ```bash
+   docker network create db-network
+   docker network create proxy-network
+   ```
+
+2. **Utwórz plik `.env`** w katalogu `docker/` na podstawie poniższego szablonu:
+
+   ```env
+   DB_CONNECTION_STRING=Host=postgres;Database=budgeto;Username=postgres;Password=twoje_haslo
+   SEED_ADMIN_PASSWORD=TwojeHasloAdmina123!
+   ```
+
+3. **Zbuduj i uruchom kontenery**
+
+   ```bash
+   cd docker
+   docker compose up -d --build
+   ```
+
+4. **Sprawdź status kontenerów**
+
+   ```bash
+   docker compose ps
+   ```
+
+   Powinieneś zobaczyć dwa uruchomione kontenery:
+
+   ```
+   budgeto-backend    running
+   budgeto-frontend   running
+   ```
+
+### Zatrzymanie
+
+```bash
+docker compose down
+```
+
+### Zmienne środowiskowe
+
+| Zmienna | Opis |
+|---|---|
+| `DB_CONNECTION_STRING` | Connection string do bazy PostgreSQL |
+| `SEED_ADMIN_PASSWORD` | Hasło domyślnego konta administratora |
+
+---
+
+## Struktura projektu
 
 ```
 src/
-├── Domain/           # Enterprise business rules, entities, value objects
-├── Application/      # Application business logic, use cases, CQRS handlers
-├── Infrastructure/   # Data access, external services, persistence
-└── Web/              # ASP.NET Core Web API + frontend (JavaScript/CSS)
-
-tests/                # Unit, integration, functional and acceptance tests
-docker/               # Docker configuration files
-.devcontainer/        # Dev Container setup for VS Code
+├── Domain/           # Encje, zdarzenia, value objects
+├── Application/      # Komendy, zapytania (CQRS), interfejsy
+├── Infrastructure/   # EF Core, baza danych, tożsamość
+└── Web/
+    ├── Endpoints/    # Minimal API endpoints
+    └── ClientApp/    # Aplikacja React
+docker/
+├── Dockerfile        # Obraz backendu
+├── Dockerfile.ui     # Obraz frontendu (Nginx)
+├── docker-compose.yml
+└── nginx.conf
 ```
-
----
-
-## 🚀 Getting Started
-
-### Prerequisites
-
-- [.NET SDK](https://dotnet.microsoft.com/download) (see `global.json` for required version)
-- [Docker](https://www.docker.com/) (optional, for containerized setup)
-
-### Build
-
-```bash
-dotnet build -tl
-```
-
-### Run
-
-```bash
-cd .\src\Web\
-dotnet watch run
-```
-
-Then navigate to [https://localhost:5001](https://localhost:5001). The app will automatically reload on source file changes.
-
----
-
-## 🧪 Testing
-
-The solution includes **unit**, **integration**, **functional**, and **acceptance** tests.
-
-**Run all tests except acceptance tests:**
-
-```bash
-dotnet test --filter "FullyQualifiedName!~AcceptanceTests"
-```
-
-**Run acceptance tests:**
-
-First, start the application:
-
-```bash
-cd .\src\Web\
-dotnet run
-```
-
-Then, in a separate terminal:
-
-```bash
-dotnet test
-```
-
----
-
-## 🛠️ Code Scaffolding
-
-The project supports scaffolding new CQRS use cases via the `ca-usecase` template.
-
-Navigate to `.\src\Application\` and run:
-
-**Create a new command:**
-
-```bash
-dotnet new ca-usecase --name CreateBudget --feature-name Budgets --usecase-type command --return-type int
-```
-
-**Create a new query:**
-
-```bash
-dotnet new ca-usecase -n GetBudgets -fn Budgets -ut query -rt BudgetsVm
-```
-
-> If you see *"No templates or subcommands found matching: 'ca-usecase'."*, install the template first:
-> ```bash
-> dotnet new install Clean.Architecture.Solution.Template::10.0.0-preview
-> ```
-
----
-
-## 🐳 Docker
-
-Docker configuration is available in the `docker/` directory. You can use it to run the application in a containerized environment.
-
----
-
-## ✏️ Code Style & Formatting
-
-The project uses [EditorConfig](https://editorconfig.org/) to maintain consistent code style across different editors and IDEs. Configuration is defined in `.editorconfig` at the root of the repository.
-
----
-
-## 📦 Package Management
-
-NuGet packages are centrally managed via `Directory.Packages.props` (Central Package Management), ensuring consistent dependency versions across all projects in the solution.
-
----
-
-## 🧰 Tech Stack
-
-| Layer | Technology |
-|---|---|
-| Backend | ASP.NET Core (C#) |
-| Frontend | JavaScript / CSS / HTML |
-| Database | Entity Framework Core (via Infrastructure layer) |
-| Build | Cake (`build.cake`) |
-| Containerization | Docker |
-| Cloud (deployment) | Azure (`azure.yaml`) |
-| Dev Environment | Dev Containers |
-
----
-
-## 📁 Project Structure
-
-```
-Budgeto/
-├── src/
-│   ├── Domain/
-│   ├── Application/
-│   ├── Infrastructure/
-│   └── Web/
-├── tests/
-├── docker/
-├── .devcontainer/
-├── Budgeto.slnx
-├── Directory.Build.props
-├── Directory.Packages.props
-├── build.cake
-├── global.json
-└── azure.yaml
-```
-
----
-
-## 📄 License
-
-This project is not yet licensed. Contact the author for usage rights.
