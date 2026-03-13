@@ -135,12 +135,12 @@ export function TransactionsPage() {
 
   return (
     <div>
-      <div className="page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+      <div className="page-header page-header-flex">
         <div>
           <h1>Transakcje</h1>
           <p>Zarzadzaj swoimi przychodami i wydatkami</p>
         </div>
-        <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+        <div className="page-header-actions">
           <div className="month-selector">
             <button onClick={prevPeriod}>&lsaquo;</button>
             <span style={{ fontSize: '0.8rem' }}>{getBudgetPeriodLabel(periodMonth, periodYear)}</span>
@@ -162,18 +162,18 @@ export function TransactionsPage() {
       )}
 
       {!loading && filteredTransactions.length > 0 && (
-        <div style={{ display: 'flex', gap: 12, marginBottom: 20 }}>
-          <div className="summary-card income" style={{ flex: 1, padding: '14px 16px' }}>
-            <div className="summary-label" style={{ fontSize: '0.75rem' }}>Przychody</div>
-            <div className="summary-value" style={{ fontSize: '1.1rem' }}>+{formatCurrency(totalIncome)}</div>
+        <div className="tx-summary-row">
+          <div className="summary-card income">
+            <div className="summary-label">Przychody</div>
+            <div className="summary-value">+{formatCurrency(totalIncome)}</div>
           </div>
-          <div className="summary-card expense" style={{ flex: 1, padding: '14px 16px' }}>
-            <div className="summary-label" style={{ fontSize: '0.75rem' }}>Wydatki</div>
-            <div className="summary-value" style={{ fontSize: '1.1rem' }}>-{formatCurrency(totalExpense)}</div>
+          <div className="summary-card expense">
+            <div className="summary-label">Wydatki</div>
+            <div className="summary-value">-{formatCurrency(totalExpense)}</div>
           </div>
-          <div className="summary-card balance" style={{ flex: 1, padding: '14px 16px' }}>
-            <div className="summary-label" style={{ fontSize: '0.75rem' }}>Bilans</div>
-            <div className="summary-value" style={{ fontSize: '1.1rem' }}>{formatCurrency(totalIncome - totalExpense)}</div>
+          <div className="summary-card balance">
+            <div className="summary-label">Bilans</div>
+            <div className="summary-value">{formatCurrency(totalIncome - totalExpense)}</div>
           </div>
         </div>
       )}

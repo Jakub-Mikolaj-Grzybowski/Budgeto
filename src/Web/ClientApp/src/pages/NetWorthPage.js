@@ -115,14 +115,6 @@ export function NetWorthPage() {
         <div className="card"><SkeletonLoader rows={6} /></div>
       ) : (
         <>
-          {/* Hero */}
-          <div className="net-worth-hero">
-            <div className="nw-hero-label">Wartosc netto</div>
-            <div className="nw-hero-value" style={{ color: netWorthColor }}>
-              {formatCurrency(summary.netWorth)}
-            </div>
-          </div>
-
           {/* Summary cards */}
           <div className="nw-summary-grid">
             <div className="summary-card income">
