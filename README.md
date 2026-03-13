@@ -133,3 +133,9 @@ docker/
 ├── docker-compose.yml
 └── nginx.conf
 ```
+
+---
+
+## Licencja
+
+Projekt udostępniony na licencji [PolyForm Noncommercial 1.0.0](LICENSE) — możesz pobierać, używać i modyfikować kod wyłącznie do celów niekomercyjnych.
