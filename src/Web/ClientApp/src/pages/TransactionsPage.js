@@ -196,7 +196,7 @@ export function TransactionsPage() {
             <div className="week-header" style={{ cursor: 'pointer', userSelect: 'none' }}
               onClick={() => setCollapsedWeeks(prev => ({ ...prev, [group.weekLabel]: !prev[group.weekLabel] }))}>
               <span className="week-header-label">
-                <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 16, fontSize: '0.7rem', color: 'var(--text-muted)', transition: 'transform 0.2s ease', transformOrigin: '50% 50%', transform: collapsedWeeks[group.weekLabel] ? 'rotate(180deg)' : 'rotate(0deg)' }}>&#9660;</span>
+                <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 16, marginLeft: -4, marginRight: 6, fontSize: '0.7rem', color: 'var(--text-muted)', transition: 'transform 0.2s ease', transformOrigin: '50% 50%', transform: collapsedWeeks[group.weekLabel] ? 'rotate(180deg)' : 'rotate(0deg)' }}>&#9660;</span>
                 {group.weekLabel}
               </span>
               <div className="week-header-totals">

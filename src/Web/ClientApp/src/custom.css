@@ -315,15 +315,6 @@ a:hover { color: var(--accent-blue); opacity: 0.85; }
 .amount-positive { color: var(--accent-green); }
 .amount-negative { color: var(--accent-red); }
 
-@media (max-width: 1024px) {
-  .budget-row {
-    grid-template-columns: 140px 1fr;
-  }
-  .budget-row-progress {
-    grid-column: 1 / -1;
-  }
-}
-
 @media (max-width: 1400px) {
   .sidebar { transform: translateX(-100%); }
   .sidebar.open { transform: translateX(0); }
