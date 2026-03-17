@@ -370,36 +370,6 @@ export function BudgetsPage() {
         <div className="card"><SkeletonLoader rows={6} /></div>
       ) : (
         <>
-          {/* Summary */}
-          {totalBudgeted > 0 && (
-            <div className="card" style={{ marginBottom: 24 }}>
-              <div className="budget-summary-grid">
-                <div>
-                  <div className="card-title" style={{ marginBottom: 6 }}>Zaplanowano</div>
-                  <div className="budget-summary-value" style={{ color: 'var(--accent-blue)' }}>{formatCurrency(totalBudgeted)}</div>
-                </div>
-                <div>
-                  <div className="card-title" style={{ marginBottom: 6 }}>Wydano</div>
-                  <div className="budget-summary-value" style={{ color: 'var(--accent-red)' }}>{formatCurrency(totalSpent)}</div>
-                </div>
-                <div>
-                  <div className="card-title" style={{ marginBottom: 6 }}>Zostalo</div>
-                  <div className="budget-summary-value" style={{ color: totalRemaining >= 0 ? 'var(--accent-green)' : 'var(--accent-red)' }}>
-                    {formatCurrency(Math.abs(totalRemaining))}
-                    {totalRemaining < 0 && <span style={{ fontSize: '0.8rem', marginLeft: 4 }}>ponad limit</span>}
-                  </div>
-                </div>
-              </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', color: 'var(--text-secondary)', marginBottom: 4 }}>
-                <span>{formatCurrency(totalSpent)} z {formatCurrency(totalBudgeted)}</span>
-                <span style={{ fontWeight: 600 }}>{Math.round(overallPct)}%</span>
-              </div>
-              <div className="progress-bar-container" style={{ height: 12 }}>
-                <div className={`progress-bar-fill ${overallProgressClass}`} style={{ width: `${Math.min(overallPct, 100)}%` }} />
-              </div>
-            </div>
-          )}
-
           {/* Category limits */}
           <div className="card" style={{ marginBottom: 24 }}>
             <div className="card-header-custom">
