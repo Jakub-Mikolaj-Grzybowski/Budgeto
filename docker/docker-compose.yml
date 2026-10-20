@@ -24,6 +24,8 @@ services:
     restart: unless-stopped
     depends_on:
       - backend-api
+    ports:
+      - "3948:3948"
     networks:
       - proxy-network
       - db-network
