@@ -2,13 +2,15 @@
 # Dockerfile — backend (.NET 10 API)
 # ============================================================
 
-FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:10.0.100 AS build
 WORKDIR /src
 
 COPY global.json Directory.Build.props Directory.Packages.props ./
 COPY src/ src/
 
-RUN dotnet restore src/Web/Web.csproj
+RUN dotnet restore src/Web/Web.csproj \
+    --source https://api.nuget.org/v3/index.json \
+    --verbosity normal
 
 RUN dotnet publish src/Web/Web.csproj \
     -c Release \
@@ -18,7 +20,7 @@ RUN dotnet publish src/Web/Web.csproj \
     /p:SkipNSwag=true
 
 # ============================================================
-FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS runtime
+FROM mcr.microsoft.com/dotnet/aspnet:10.0.0 AS runtime
 WORKDIR /app
 
 EXPOSE 8080
