@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   backend-api:
     build:
@@ -7,12 +5,11 @@ services:
       dockerfile: docker/Dockerfile
     deploy:
       replicas: 1
-    container_name: budgeto-backend
     restart: unless-stopped
     environment:
-      - ConnectionStrings__BudgetoDb=${DB_CONNECTION_STRING}
-      - Seed__AdminPassword=${SEED_ADMIN_PASSWORD}
-      - ASPNETCORE_ENVIRONMENT=Development
+      ConnectionStrings__BudgetoDb: ${DB_CONNECTION_STRING}
+      Seed__AdminPassword: ${SEED_ADMIN_PASSWORD}
+      ASPNETCORE_ENVIRONMENT: Development
     networks:
       - db-network
 
@@ -20,21 +17,15 @@ services:
     build:
       context: ..
       dockerfile: docker/Dockerfile.ui
-    container_name: budgeto-frontend
     restart: unless-stopped
     depends_on:
       - backend-api
     ports:
       - "3948:3948"
     networks:
-      - proxy-network
       - db-network
-  
 
 networks:
   db-network:
     external: true
     name: db-network
-  proxy-network:
-    external: true
-    name: proxy-network

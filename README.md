@@ -13,7 +13,7 @@ Osobisty menedżer budżetu domowego zbudowany na **ASP.NET Core** i **React**. 
 
 | Warstwa | Technologia |
 |---|---|
-| Backend | ASP.NET Core 9, Minimal API, MediatR, EF Core |
+| Backend | ASP.NET Core 10, Minimal API, MediatR, EF Core |
 | Frontend | React 18, JavaScript |
 | Baza danych | PostgreSQL |
 | Architektura | Clean Architecture |
@@ -25,7 +25,7 @@ Osobisty menedżer budżetu domowego zbudowany na **ASP.NET Core** i **React**. 
 
 ### Wymagania
 
-- [.NET 9 SDK](https://dotnet.microsoft.com/download)
+- [.NET 10 SDK](https://dotnet.microsoft.com/download)
 - [Node.js 20+](https://nodejs.org/)
 - PostgreSQL
 
@@ -59,7 +59,7 @@ Osobisty menedżer budżetu domowego zbudowany na **ASP.NET Core** i **React**. 
 
 ## Uruchomienie przez Docker
 
-Projekt zawiera gotową konfigurację Docker z dwoma kontenerami: `budgeto-backend` (API) i `budgeto-frontend` (React + Nginx). Kontenery komunikują się przez zewnętrzne sieci `db-network` i `proxy-network` — musisz je utworzyć przed uruchomieniem.
+Projekt zawiera gotową konfigurację Docker z dwoma usługami: `backend-api` (API) i `frontend` (React + Nginx). Obie usługi korzystają z zewnętrznej sieci `db-network`, która umożliwia frontendowi komunikację z API oraz backendowi dostęp do PostgreSQL.
 
 ### Wymagania
 
@@ -72,7 +72,6 @@ Projekt zawiera gotową konfigurację Docker z dwoma kontenerami: `budgeto-backe
 
    ```bash
    docker network create db-network
-   docker network create proxy-network
    ```
 
 2. **Utwórz plik `.env`** w katalogu `docker/` na podstawie poniższego szablonu:
@@ -95,11 +94,11 @@ Projekt zawiera gotową konfigurację Docker z dwoma kontenerami: `budgeto-backe
    docker compose ps
    ```
 
-   Powinieneś zobaczyć dwa uruchomione kontenery:
+   Powinieneś zobaczyć dwie uruchomione usługi:
 
    ```
-   budgeto-backend    running
-   budgeto-frontend   running
+   backend-api    running
+   frontend       running
    ```
 
 ### Zatrzymanie
