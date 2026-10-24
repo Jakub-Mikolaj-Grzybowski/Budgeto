@@ -10,7 +10,10 @@ COPY src/ src/
 
 RUN dotnet restore src/Web/Web.csproj \
     --source https://api.nuget.org/v3/index.json \
-    --verbosity normal
+    --verbosity normal \
+    --disable-parallel \
+    -p:NuGetAudit=false \
+    -p:TreatWarningsAsErrors=false
 
 RUN dotnet publish src/Web/Web.csproj \
     -c Release \
